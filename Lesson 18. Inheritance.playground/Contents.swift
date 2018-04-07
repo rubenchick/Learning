@@ -81,7 +81,7 @@ peopleInOurHome.append(scientist)
 print("\nAdd new person")
 for person in peopleInOurHome.reversed() {
     print("My name is \(person.name). I am a \(person.sex.rawValue). Height is \(person.height) and weight is \(person.weight)kg. ", terminator: "")
-    if person is Scientist { //подглядел
+    if person is Scientist { //подглядел эту строчку
         print("My age is \(scientist.age) and I married is \(scientist.married). ", terminator: "")
         person.say()
         print("")
@@ -89,31 +89,124 @@ for person in peopleInOurHome.reversed() {
     else {  person.say() }
 }
 
-
-//6. Метод "say(говорит)" реализовать таким образом, чтобы перед тем как выполнить собственный method say, выполнялся сначала метод say класса People.
-//
-
-//7. Вывести все это в обратном порядке(Google в помощь).
-//
-
-
 //Для тех кто не просто учит программирование а хочет еще и работать.
-//
 //8. Создать класс "Марсианин" (не наследник класса people!) со своими собственными property (отличными от people) и методом "say" (отличным от people).
+class Martian {
+    var colorDerma : String
+    var religian   : String
+    func say(){
+        print("Where are extraterrestrials ?")
+    }
+    init(colorDerma: String,religian :String){
+        self.colorDerma = colorDerma
+        self.religian = religian
+    }
+}
 //9. Унаследоваться от него и создать пару других классов (Инопланетян) с переопределенным методом "say".
+class Venerasun : Martian {
+    override func say() {
+        print("Only Venera")
+    }
+}
+class Neptunsun : Martian {
+    override func say() {
+        print("Only Neptun")
+    }
+}
 //10. Объединить всех people и Марсианинов) в один массив.
+let venerasun = Venerasun(colorDerma : "Yellow", religian : "War")
+let neptunsun = Neptunsun(colorDerma : "Green", religian : "Love")
+
+enum Container {
+    case HumanType(Human)
+    case MartinType(Martian)
+}
+
+var arrayAllEntity: [Container] = [.HumanType(cook),.MartinType(venerasun),.MartinType(neptunsun),.HumanType(manager),.HumanType(wrestler),.HumanType(scientist)]
+
 //11. В цикле выводить тип объекта (People или Марсианин) перед тем как выводить его свойства и вызывать метод
-//
+
+print("\nAdd new civilization")
+for exemple in arrayAllEntity {
+    switch exemple {
+        case .HumanType(let person): do {
+           // print("Integer: \(val.name)")
+            print("I am a people. My name is \(person.name). I am a \(person.sex.rawValue). Height is \(person.height) and weight is \(person.weight)kg. ", terminator: "")
+            if person is Scientist {
+                print("My age is \(scientist.age) and I married is \(scientist.married). ", terminator: "")
+                person.say()
+                print("")
+            }
+            else {  person.say() }
+        }
+        case .MartinType(let person): do {
+            print("I am a martin. My color derma is \(person.colorDerma). I believe in \(person.religian). ", terminator: "")
+            person.say()
+        }
+    }
+}
+
 //Для тех кто дойдет до этого уровня будут достоин уважения!
 //
 //12. Поместить всех people в один массив, а Марсиан в другой массив (количество People и Марсиан должно быть разное)
+var arrayHuman = [cook,manager,wrestler,scientist]
+var arrayMartin = [venerasun,neptunsun]
+
 //13. В одном цикле “for in” выводить People а потом Марсианина, доставая данные поочередно из двух разных массивов, если в одном из массивов объектов больше, то в конце должны выводиться только объекты этого массива (так как других уже нет)
-//
+print("\nPrint by rotation")
+let length = arrayHuman.count > arrayMartin.count ? arrayHuman.count : arrayHuman.count
+for i in 0...length-1 {
+    
+    if i <  arrayHuman.count {
+        print("I am a people. My name is \(arrayHuman[i].name). I am a \(arrayHuman[i].sex.rawValue). Height is \(arrayHuman[i].height) and weight is \(arrayHuman[i].weight)kg. ", terminator: "")
+        if arrayHuman[i] is Scientist {
+            print("My age is \(scientist.age) and I married is \(scientist.married). ", terminator: "")
+            arrayHuman[i].say()
+            print("")
+        }
+        else {  arrayHuman[i].say() }
+    }
+    if i <  arrayMartin.count {
+        print("I am a martin. My color derma is \(arrayMartin[i].colorDerma). I believe in \(arrayMartin[i].religian). ", terminator: "")
+        arrayMartin[i].say()
+    }
+}
+
 //Кто пройдет этот уровень станет настоящим Джедаем и сможет открывать двери на работу с ноги!:)
 //
 //14. Соединить Марсиан и People в одном массиве.
 //15. Используя нужный метод array отсортировать массив (как результат будет другой массив).
 //16. Сортировать так: сначала People, а потом Марсиане, люди отсортированы по имени, а Марсиане по марсианским кличкам.
-//17.Требует разобраться с сортировкой.
+//17. Требует разобраться с сортировкой.
+print("\nSorded")
 
+var sortedArray = arrayAllEntity.sorted { (elementOne, elementTwo) -> Bool in
+    {
+        switch (elementOne,elementTwo) {
+            case (.HumanType(let personOne),.HumanType(let personTwo)): return personOne.name > personTwo.name ? false : true
+            case (.HumanType( _),.MartinType( _)): return true
+            case (.MartinType( _),.HumanType( _)): return false
+            case (.MartinType(let personOne),.MartinType(let personTwo)): return personOne.colorDerma > personTwo.colorDerma ? false : true
+        }
+    }()
+}
+
+for exemple in sortedArray {
+    switch exemple {
+    case .HumanType(let person): do {
+        // print("Integer: \(val.name)")
+        print("I am a people. My name is \(person.name). I am a \(person.sex.rawValue). Height is \(person.height) and weight is \(person.weight)kg. ", terminator: "")
+        if person is Scientist {
+            print("My age is \(scientist.age) and I married is \(scientist.married). ", terminator: "")
+            person.say()
+            print("")
+        }
+        else {  person.say() }
+        }
+    case .MartinType(let person): do {
+        print("I am a martin. My color derma is \(person.colorDerma). I believe in \(person.religian). ", terminator: "")
+        person.say()
+        }
+    }
+}
 
