@@ -1,16 +1,19 @@
 //: A UIKit based Playground for presenting user interface
   
 import UIKit
-protocol Container: Indexable, CollectionType {
-    matating func pop() -> Self.Generator.Element
-    mutating func push(element: Self.Generator.Element)
-    func 
+protocol Container: _Indexable, Collection {
+    mutating func pop() -> Self.Iterator.Element
+    mutating func push(element: Self.Iterator.Element)
+    func peek() -> Self.Iterator.Element?
 }
 
 //Новичек
 
 // 1. Почитать о том, что такое стек и очередь.
 // 2. Используя протокол из прикрепленного фото, сделать расширение "Container" для класса "Array" таким образом, чтобы массивом можно было управлять как стеком. Небольшая подсказка, указывать в качестве типа данных вместо Self.Generator.Element нужно просто Element.
+
+
+
 
 //Студент
 
