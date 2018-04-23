@@ -232,7 +232,7 @@ class Programmist<T> {
         switch index {
         case 0: return name
         case 1: print(age)
-        case 2: print(edication)   
+        case 2: print(edication)
         default:
             print("hi")
         }
